@@ -1,14 +1,25 @@
 {
-  "capital": 200,
-  "posiciones": {},
-  "pendientes": [],
-  "historial": [],
-  "equity_hist": [
-    {
-      "fecha": "2026-07-24",
-      "equity": 200
+  "version": 2,
+  "estrategias": {
+    "IA+SENT": {
+      "capital": 200,
+      "posiciones": {},
+      "pendientes": [],
+      "historial": []
+    },
+    "TECNICA": {
+      "capital": 200,
+      "posiciones": {},
+      "pendientes": [],
+      "historial": []
+    },
+    "REVERSION": {
+      "capital": 200,
+      "posiciones": {},
+      "pendientes": [],
+      "historial": []
     }
-  ],
+  },
   "ultima_fecha": {
     "AAPL": "2026-07-23",
     "MSFT": "2026-07-23",
@@ -19,7 +30,7 @@
     "AAPL": 321.6600036621094,
     "MSFT": 381.5799865722656,
     "TSLA": 319.69000244140625,
-    "BTC-USD": 65706.59375
+    "BTC-USD": 65580.828125
   },
   "inicio": "2026-07-24"
 }
