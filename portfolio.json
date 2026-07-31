@@ -8,18 +8,20 @@
       "historial": []
     },
     "TECNICA": {
-      "capital": 116.3340370341844,
-      "posiciones": {
-        "AAPL": {
-          "unidades": 0.245686,
-          "entry": 340.2,
-          "stop": 326.16,
-          "tp": 372.76,
-          "fecha": "2026-07-28"
-        }
-      },
+      "capital": 191.10929221454933,
+      "posiciones": {},
       "pendientes": [],
-      "historial": []
+      "historial": [
+        {
+          "ticker": "AAPL",
+          "entrada": 340.2,
+          "salida": 304.66,
+          "pnl": -8.81,
+          "motivo": "STOP (gap)",
+          "fecha_in": "2026-07-28",
+          "fecha_out": "2026-07-31"
+        }
+      ]
     },
     "REVERSION": {
       "capital": 200,
@@ -29,10 +31,10 @@
     }
   },
   "ultima_fecha": {
-    "AAPL": "2026-07-30",
-    "MSFT": "2026-07-30",
-    "TSLA": "2026-07-30",
-    "BTC-USD": "2026-07-30"
+    "AAPL": "2026-07-31",
+    "MSFT": "2026-07-31",
+    "TSLA": "2026-07-31",
+    "BTC-USD": "2026-07-31"
   },
   "bh_ref": {
     "AAPL": 321.6600036621094,
