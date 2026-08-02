@@ -1,24 +1,29 @@
 # ============================================================
 # PAPER TRADING MULTI-ESTRATEGIA
-# 3 estrategias compiten en paralelo con $200 ficticios cada una:
-#   IA+SENT   - breakout + IA + filtro de sentimiento (la original)
-#   TECNICA   - breakout puro, sin IA (¿la IA aporta algo?)
-#   REVERSION - comprar caidas (RSI bajo) dentro de tendencia alcista
+# 6 estrategias compiten en paralelo con $200 ficticios cada una:
+# IA+SENT       - breakout + IA + filtro de sentimiento (la original)
+# TECNICA       - breakout puro (20d), sin IA (¿la IA aporta algo?)
+# REVERSION     - comprar caidas (RSI bajo) dentro de tendencia alcista
+# REVERSION_BB  - reversion a la media: banda inferior de Bollinger +
+#                 impulso MACD frenandose (contraria, sin exigir tendencia)
+# BREAKOUT_55   - ruptura de canal de 55 dias (estilo turtle), mas
+#                 selectiva y de mas largo plazo que TECNICA
+# RSI_RAPIDO    - rebote contrario con RSI(7): compra sobreventa extrema
+#                 sin filtro de tendencia, sale en sobrecompra
 # Mismas reglas de riesgo para todas -> comparacion justa.
 # Estado en portfolio.json (se commitea al repo). Reporte a Telegram.
 # ============================================================
 import os
 import json
 from bot_telegram import (obtener_datos, calcular_indicadores, entrenar_IA,
-                          analizar_sentimiento, enviar_telegram,
-                          FEATURES, UMBRAL_IA, UMBRAL_SENT, TICKERS, RIESGO)
+                           analizar_sentimiento, enviar_telegram,
+                           FEATURES, UMBRAL_IA, UMBRAL_SENT, TICKERS, RIESGO)
 
 PORTFOLIO_FILE = "portfolio.json"
 CAPITAL_INICIAL = 200
 COMISION = 0.001
 SLIPPAGE = 0.0005
 VERSION = 2
-
 
 # ============================================================
 # ESTRATEGIAS (senal de entrada; opcionalmente senal de salida)
@@ -31,55 +36,77 @@ def senal_ia(u, ctx):
     s = ctx["sentimiento"]
     return not (s is not None and s < UMBRAL_SENT)
 
-
 def senal_tecnica(u, ctx):
     return bool(u["SMA20"] > u["SMA50"] and ctx["breakout"])
-
 
 def senal_reversion(u, ctx):
     return bool(u["SMA20"] > u["SMA50"] and u["RSI"] < 35)
 
-
 def salida_reversion(prev):
     return bool(prev["RSI"] > 60)
 
+def senal_reversion_bb(u, ctx):
+    # Contraria: precio toca/perfora la banda inferior de Bollinger y el
+    # impulso bajista del MACD se frena. No exige tendencia alcista.
+    return bool(u["Close"] <= u["BB_lower"] * 1.01) and ctx["hist_rising"]
+
+def salida_reversion_bb(prev):
+    # Toma ganancia cuando el precio ya volvio a la banda media (reversion cumplida)
+    return bool(prev["Close"] >= prev["BB_mid"])
+
+def senal_breakout_55(u, ctx):
+    # Ruptura de un canal mas largo (55 dias) -> senal mas selectiva que TECNICA
+    return bool(ctx["breakout_55"])
+
+def senal_rsi_rapido(u, ctx):
+    # Puramente contraria: sobreventa extrema con RSI(7), sin filtro de tendencia
+    return bool(u["RSI7"] < 25)
+
+def salida_rsi_rapido(prev):
+    return bool(prev["RSI7"] > 70)
 
 ESTRATEGIAS = {
     "IA+SENT": {"senal": senal_ia, "salida": None},
     "TECNICA": {"senal": senal_tecnica, "salida": None},
     "REVERSION": {"senal": senal_reversion, "salida": salida_reversion},
+    "REVERSION_BB": {"senal": senal_reversion_bb, "salida": salida_reversion_bb},
+    "BREAKOUT_55": {"senal": senal_breakout_55, "salida": None},
+    "RSI_RAPIDO": {"senal": senal_rsi_rapido, "salida": salida_rsi_rapido},
 }
-
 
 # ============================================================
 # ESTADO
 # ============================================================
+def estrategia_vacia():
+    return {"capital": CAPITAL_INICIAL, "posiciones": {},
+            "pendientes": [], "historial": []}
+
 def portafolio_nuevo():
     return {
         "version": VERSION,
-        "estrategias": {n: {"capital": CAPITAL_INICIAL, "posiciones": {},
-                            "pendientes": [], "historial": []}
-                        for n in ESTRATEGIAS},
+        "estrategias": {n: estrategia_vacia() for n in ESTRATEGIAS},
         "ultima_fecha": {},
         "bh_ref": {},
         "inicio": None
     }
-
 
 def cargar_portfolio():
     if os.path.exists(PORTFOLIO_FILE):
         with open(PORTFOLIO_FILE) as f:
             data = json.load(f)
         if data.get("version") == VERSION:
+            # Migracion: si se agregaron estrategias nuevas, se inicializan
+            # con capital fresco sin tocar el progreso de las existentes.
+            for n in ESTRATEGIAS:
+                if n not in data["estrategias"]:
+                    data["estrategias"][n] = estrategia_vacia()
             return data
-        print("Formato anterior detectado: se reinicia el experimento.")
+    print("Formato anterior detectado: se reinicia el experimento.")
     return portafolio_nuevo()
-
 
 def guardar_portfolio(port):
     with open(PORTFOLIO_FILE, "w") as f:
         json.dump(port, f, indent=2)
-
 
 # ============================================================
 # MECANICA DE TRADING (identica para todas las estrategias)
@@ -91,12 +118,11 @@ def cerrar(p, nombre, ticker, precio_bruto, motivo, fecha, eventos):
         - pos["unidades"] * salida * COMISION
     p["capital"] += pos["unidades"] * pos["entry"] + pnl
     p["historial"].append({"ticker": ticker, "entrada": pos["entry"],
-                           "salida": round(salida, 2), "pnl": round(pnl, 2),
-                           "motivo": motivo, "fecha_in": pos["fecha"],
-                           "fecha_out": fecha})
+                            "salida": round(salida, 2), "pnl": round(pnl, 2),
+                            "motivo": motivo, "fecha_in": pos["fecha"],
+                            "fecha_out": fecha})
     emoji = "✅" if pnl > 0 else "❌"
     eventos.append(f"{emoji} [{nombre}] {ticker} cerrada ({motivo}): ${pnl:+.2f}")
-
 
 def gestionar_estrategia(nombre, est, p, ticker, barra, ctx, eventos):
     open_p, high_p, low_p, close_p = barra["ohlc"]
@@ -110,7 +136,7 @@ def gestionar_estrategia(nombre, est, p, ticker, barra, ctx, eventos):
         elif open_p >= pos["tp"]:
             cerrar(p, nombre, ticker, open_p, "TP (gap)", fecha, eventos)
         elif est["salida"] and est["salida"](prev):
-            cerrar(p, nombre, ticker, open_p, "SALIDA RSI", fecha, eventos)
+            cerrar(p, nombre, ticker, open_p, "SALIDA", fecha, eventos)
         elif low_p <= pos["stop"]:
             cerrar(p, nombre, ticker, pos["stop"], "STOP", fecha, eventos)
         elif high_p >= pos["tp"]:
@@ -128,7 +154,7 @@ def gestionar_estrategia(nombre, est, p, ticker, barra, ctx, eventos):
             fill = open_p * (1 + SLIPPAGE)
             if dist > 0 and fill > 0:
                 unidades = round(min(p["capital"] * RIESGO / dist,
-                                     p["capital"] / fill), 6)
+                                      p["capital"] / fill), 6)
                 if unidades * fill >= 1:
                     costo = unidades * fill
                     p["capital"] -= costo + costo * COMISION
@@ -137,7 +163,7 @@ def gestionar_estrategia(nombre, est, p, ticker, barra, ctx, eventos):
                         "stop": round(fill - dist, 2),
                         "tp": round(fill + 2 * dist, 2), "fecha": fecha}
                     eventos.append(f"🟢 [{nombre}] {ticker} compra: "
-                                   f"{unidades} und @ ${fill:.2f}")
+                                    f"{unidades} und @ ${fill:.2f}")
                     pos = p["posiciones"][ticker]
                     if low_p <= pos["stop"]:
                         cerrar(p, nombre, ticker, pos["stop"], "STOP (mismo día)",
@@ -151,7 +177,6 @@ def gestionar_estrategia(nombre, est, p, ticker, barra, ctx, eventos):
         if est["senal"](barra["u"], ctx):
             p["pendientes"].append(ticker)
             eventos.append(f"📌 [{nombre}] {ticker}: señal, entra mañana")
-
 
 def procesar_ticker(ticker, port, eventos):
     df = obtener_datos(ticker)
@@ -169,6 +194,8 @@ def procesar_ticker(ticker, port, eventos):
 
     # contexto compartido (se calcula UNA vez por ticker)
     breakout = close_p > float(df["High"].rolling(20).max().shift(1).iloc[-1])
+    breakout_55 = close_p > float(df["High"].rolling(55).max().shift(1).iloc[-1])
+    hist_rising = bool(u["MACD_hist"] > prev["MACD_hist"])
     ia_prob = None
     try:
         modelo, _, _ = entrenar_IA(df)
@@ -177,17 +204,18 @@ def procesar_ticker(ticker, port, eventos):
         eventos.append(f"⚠ IA {ticker}: {e}")
     sentimiento = analizar_sentimiento(ticker)
 
-    ctx = {"breakout": breakout, "ia_prob": ia_prob, "sentimiento": sentimiento}
+    ctx = {"breakout": breakout, "breakout_55": breakout_55,
+           "hist_rising": hist_rising, "ia_prob": ia_prob,
+           "sentimiento": sentimiento}
     barra = {"ohlc": (float(u["Open"]), float(u["High"]),
-                      float(u["Low"]), close_p),
+                       float(u["Low"]), close_p),
              "fecha": fecha, "atr": float(u["ATR"]),
              "atr_prev": float(prev["ATR"]), "u": u, "prev": prev}
 
     for nombre, est in ESTRATEGIAS.items():
         gestionar_estrategia(nombre, est, port["estrategias"][nombre],
-                             ticker, barra, ctx, eventos)
+                              ticker, barra, ctx, eventos)
     return close_p
-
 
 # ============================================================
 # EJECUCION
@@ -218,7 +246,7 @@ if __name__ == "__main__":
     for nombre, p in port["estrategias"].items():
         p["pendientes"] = [t for t in p["pendientes"] if t in cierres]
         equity = p["capital"] + sum(pos["unidades"] * cierres.get(tk, pos["entry"])
-                                    for tk, pos in p["posiciones"].items())
+                                     for tk, pos in p["posiciones"].items())
         ret = (equity / CAPITAL_INICIAL - 1) * 100
         filas.append((nombre, equity, ret, len(p["posiciones"]),
                       len(p["historial"])))
@@ -231,7 +259,7 @@ if __name__ == "__main__":
     for i, (nombre, eq, ret, npos, ntr) in enumerate(filas):
         m = medallas[i] if i < len(medallas) else "•"
         lineas.append(f"{m} <b>{nombre}</b>: ${eq:.2f} ({ret:+.2f}%) | "
-                      f"{npos} pos | {ntr} trades")
+                       f"{npos} pos | {ntr} trades")
     lineas.append(f"📈 Buy & Hold: {bh_ret:+.2f}%")
 
     if eventos:

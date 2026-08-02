@@ -19,7 +19,7 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 # CONFIGURACION
 # ============================================================
 TICKERS = ["AAPL", "MSFT", "TSLA", "BTC-USD"]
-CAPITAL = 200      # capital maximo a invertir por ahora
+CAPITAL = 200  # capital maximo a invertir por ahora
 RIESGO = 0.02
 UMBRAL_IA = 0.55
 UMBRAL_SENT = -0.05
@@ -29,7 +29,6 @@ FEATURES = ["retorno1", "retorno5", "tendencia", "volatilidad", "vol_rel", "RSI"
 
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "")
-
 
 # ============================================================
 # TELEGRAM
@@ -53,15 +52,13 @@ def enviar_telegram(mensaje):
         print(f"Error enviando a Telegram: {e}")
         return False
 
-
 # ============================================================
 # DATOS E INDICADORES
 # ============================================================
 def obtener_datos(ticker):
     df = yf.download(ticker, period="5y", interval="1d", auto_adjust=True,
-                     multi_level_index=False, progress=False)
+                      multi_level_index=False, progress=False)
     return df.dropna().copy()
-
 
 def calcular_indicadores(df):
     df["SMA20"] = df["Close"].rolling(20).mean()
@@ -74,6 +71,13 @@ def calcular_indicadores(df):
     avg_loss = loss.ewm(alpha=1/14, adjust=False).mean()
     df["RSI"] = 100 - (100 / (1 + avg_gain / avg_loss))
 
+    # RSI rapido (7 periodos) para la estrategia contraria de rebote
+    gain7 = delta.clip(lower=0)
+    loss7 = -delta.clip(upper=0)
+    avg_gain7 = gain7.ewm(alpha=1/7, adjust=False).mean()
+    avg_loss7 = loss7.ewm(alpha=1/7, adjust=False).mean()
+    df["RSI7"] = 100 - (100 / (1 + avg_gain7 / avg_loss7))
+
     tr = pd.concat([
         df["High"] - df["Low"],
         (df["High"] - df["Close"].shift()).abs(),
@@ -81,13 +85,25 @@ def calcular_indicadores(df):
     ], axis=1).max(axis=1)
     df["ATR"] = tr.ewm(alpha=1/14, adjust=False).mean()
 
+    # MACD (12,26,9) para medir si el impulso bajista se frena/gira
+    df["EMA12"] = df["Close"].ewm(span=12, adjust=False).mean()
+    df["EMA26"] = df["Close"].ewm(span=26, adjust=False).mean()
+    df["MACD"] = df["EMA12"] - df["EMA26"]
+    df["MACD_signal"] = df["MACD"].ewm(span=9, adjust=False).mean()
+    df["MACD_hist"] = df["MACD"] - df["MACD_signal"]
+
+    # Bandas de Bollinger (20, 2) para detectar extremos de precio
+    df["BB_mid"] = df["SMA20"]
+    bb_std = df["Close"].rolling(20).std()
+    df["BB_upper"] = df["BB_mid"] + 2 * bb_std
+    df["BB_lower"] = df["BB_mid"] - 2 * bb_std
+
     df["retorno1"] = df["Close"].pct_change()
     df["retorno5"] = df["Close"].pct_change(5)
     df["tendencia"] = (df["SMA20"] - df["SMA50"]) / df["Close"]
     df["volatilidad"] = df["ATR"] / df["Close"]
     df["vol_rel"] = df["Volume"] / df["Volume"].rolling(20).mean()
     return df.dropna().copy()
-
 
 # ============================================================
 # IA (validacion out-of-sample + modelo final para la senal en vivo)
@@ -112,7 +128,6 @@ def entrenar_IA(df):
     modelo = RandomForestClassifier(**params).fit(X, y)
     return modelo, precision, tasa_base
 
-
 # ============================================================
 # SENTIMIENTO (None si falla -> no bloquea)
 # ============================================================
@@ -131,7 +146,6 @@ def analizar_sentimiento(ticker):
     except Exception:
         return None
 
-
 # ============================================================
 # SENAL Y RIESGO
 # ============================================================
@@ -147,7 +161,6 @@ def gestion_riesgo(precio, atr, capital=CAPITAL, riesgo=RIESGO, fraccional=False
     return {"unidades": round(unidades, 6), "stop": round(precio - dist, 2),
             "take": round(precio + 2 * dist, 2),
             "riesgo_usd": round(unidades * dist, 2)}
-
 
 def analizar_ticker(ticker):
     df = obtener_datos(ticker)
@@ -174,11 +187,11 @@ def analizar_ticker(ticker):
 
     if senal and not bloqueo:
         r = gestion_riesgo(float(u["Close"]), float(u["ATR"]),
-                           fraccional="-USD" in ticker)
+                            fraccional="-USD" in ticker)
         if r:
             lineas.append(f"🟢 <b>COMPRA</b> | {r['unidades']} und | "
-                          f"SL ${r['stop']} | TP ${r['take']} | "
-                          f"Riesgo ${r['riesgo_usd']}")
+                           f"SL ${r['stop']} | TP ${r['take']} | "
+                           f"Riesgo ${r['riesgo_usd']}")
         else:
             lineas.append("🟡 Señal sin tamaño de posición válido")
     elif senal and bloqueo:
@@ -186,7 +199,6 @@ def analizar_ticker(ticker):
     else:
         lineas.append("🟡 Sin operación")
     return "\n".join(lineas)
-
 
 # ============================================================
 # EJECUCION
