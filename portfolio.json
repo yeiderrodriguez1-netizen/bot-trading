@@ -28,6 +28,24 @@
       "posiciones": {},
       "pendientes": [],
       "historial": []
+    },
+    "REVERSION_BB": {
+      "capital": 200,
+      "posiciones": {},
+      "pendientes": [],
+      "historial": []
+    },
+    "BREAKOUT_55": {
+      "capital": 200,
+      "posiciones": {},
+      "pendientes": [],
+      "historial": []
+    },
+    "RSI_RAPIDO": {
+      "capital": 200,
+      "posiciones": {},
+      "pendientes": [],
+      "historial": []
     }
   },
   "ultima_fecha": {
