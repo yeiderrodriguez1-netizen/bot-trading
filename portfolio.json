@@ -10,7 +10,9 @@
     "TECNICA": {
       "capital": 191.10929221454933,
       "posiciones": {},
-      "pendientes": [],
+      "pendientes": [
+        "MSFT"
+      ],
       "historial": [
         {
           "ticker": "AAPL",
@@ -38,7 +40,9 @@
     "BREAKOUT_55": {
       "capital": 200,
       "posiciones": {},
-      "pendientes": [],
+      "pendientes": [
+        "MSFT"
+      ],
       "historial": []
     },
     "RSI_RAPIDO": {
@@ -74,25 +78,33 @@
     "GAP": {
       "capital": 200,
       "posiciones": {},
-      "pendientes": [],
+      "pendientes": [
+        "MSFT"
+      ],
       "historial": []
     },
     "MERCADO_AMPLIO": {
       "capital": 200,
       "posiciones": {},
-      "pendientes": [],
+      "pendientes": [
+        "MSFT"
+      ],
       "historial": []
     },
     "SEMANAL_DIARIO": {
       "capital": 200,
       "posiciones": {},
-      "pendientes": [],
+      "pendientes": [
+        "MSFT"
+      ],
       "historial": []
     },
     "ROTACION": {
       "capital": 200,
       "posiciones": {},
-      "pendientes": [],
+      "pendientes": [
+        "MSFT"
+      ],
       "historial": []
     },
     "SENTIMIENTO": {
@@ -103,9 +115,9 @@
     }
   },
   "ultima_fecha": {
-    "AAPL": "2026-07-31",
-    "MSFT": "2026-07-31",
-    "TSLA": "2026-07-31",
+    "AAPL": "2026-08-03",
+    "MSFT": "2026-08-03",
+    "TSLA": "2026-08-03",
     "BTC-USD": "2026-08-03"
   },
   "bh_ref": {
@@ -115,5 +127,15 @@
     "BTC-USD": 65580.828125
   },
   "inicio": "2026-07-24",
-  "sentimiento_hist": {}
+  "sentimiento_hist": {
+    "AAPL": [
+      0.05839999999999999
+    ],
+    "MSFT": [
+      0.11915999999999997
+    ],
+    "TSLA": [
+      -0.21163999999999997
+    ]
+  }
 }
