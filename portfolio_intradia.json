@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "estrategias": {
+    "EMA_RAPIDA": {
+      "capital": 200,
+      "posiciones": {},
+      "historial": []
+    },
+    "RSI_SCALP": {
+      "capital": 200,
+      "posiciones": {},
+      "historial": []
+    }
+  }
+}
