@@ -52,6 +52,54 @@
       "posiciones": {},
       "pendientes": [],
       "historial": []
+    },
+    "SQUEEZE": {
+      "capital": 200,
+      "posiciones": {},
+      "pendientes": [],
+      "historial": []
+    },
+    "VOLUMEN": {
+      "capital": 200,
+      "posiciones": {},
+      "pendientes": [],
+      "historial": []
+    },
+    "PULLBACK_50": {
+      "capital": 200,
+      "posiciones": {},
+      "pendientes": [],
+      "historial": []
+    },
+    "GAP": {
+      "capital": 200,
+      "posiciones": {},
+      "pendientes": [],
+      "historial": []
+    },
+    "MERCADO_AMPLIO": {
+      "capital": 200,
+      "posiciones": {},
+      "pendientes": [],
+      "historial": []
+    },
+    "SEMANAL_DIARIO": {
+      "capital": 200,
+      "posiciones": {},
+      "pendientes": [],
+      "historial": []
+    },
+    "ROTACION": {
+      "capital": 200,
+      "posiciones": {},
+      "pendientes": [],
+      "historial": []
+    },
+    "SENTIMIENTO": {
+      "capital": 200,
+      "posiciones": {},
+      "pendientes": [],
+      "historial": []
     }
   },
   "ultima_fecha": {
@@ -66,5 +114,6 @@
     "TSLA": 319.69000244140625,
     "BTC-USD": 65580.828125
   },
-  "inicio": "2026-07-24"
+  "inicio": "2026-07-24",
+  "sentimiento_hist": {}
 }
