@@ -46,13 +46,19 @@
       "posiciones": {},
       "pendientes": [],
       "historial": []
+    },
+    "VELAS": {
+      "capital": 200,
+      "posiciones": {},
+      "pendientes": [],
+      "historial": []
     }
   },
   "ultima_fecha": {
     "AAPL": "2026-07-31",
     "MSFT": "2026-07-31",
     "TSLA": "2026-07-31",
-    "BTC-USD": "2026-08-02"
+    "BTC-USD": "2026-08-03"
   },
   "bh_ref": {
     "AAPL": 321.6600036621094,
