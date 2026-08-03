@@ -3,3 +3,4 @@ numpy
 yfinance
 scikit-learn
 vaderSentiment
+tzdata
