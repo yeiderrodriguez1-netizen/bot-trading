@@ -1,17 +1,31 @@
 # ============================================================
 # PAPER TRADING MULTI-ESTRATEGIA
-# 7 estrategias compiten en paralelo con $200 ficticios cada una:
-# IA+SENT       - breakout + IA + filtro de sentimiento (la original)
-# TECNICA       - breakout puro (20d), sin IA (¿la IA aporta algo?)
-# REVERSION     - comprar caidas (RSI bajo) dentro de tendencia alcista
-# REVERSION_BB  - reversion a la media: banda inferior de Bollinger +
-#                 impulso MACD frenandose (contraria, sin exigir tendencia)
-# BREAKOUT_55   - ruptura de canal de 55 dias (estilo turtle), mas
-#                 selectiva y de mas largo plazo que TECNICA
-# RSI_RAPIDO    - rebote contrario con RSI(7): compra sobreventa extrema
-#                 sin filtro de tendencia, sale en sobrecompra
-# VELAS         - patron de velas (engulfing alcista / martillo) tras una
-#                 caida: pura accion del precio, sin indicadores derivados
+# 15 estrategias compiten en paralelo con $200 ficticios cada una:
+# IA+SENT        - breakout + IA + filtro de sentimiento (la original)
+# TECNICA        - breakout puro (20d), sin IA (¿la IA aporta algo?)
+# REVERSION      - comprar caidas (RSI bajo) dentro de tendencia alcista
+# REVERSION_BB   - reversion a la media: banda inferior de Bollinger +
+#                  impulso MACD frenandose (contraria, sin exigir tendencia)
+# BREAKOUT_55    - ruptura de canal de 55 dias (estilo turtle), mas
+#                  selectiva y de mas largo plazo que TECNICA
+# RSI_RAPIDO     - rebote contrario con RSI(7): compra sobreventa extrema
+#                  sin filtro de tendencia, sale en sobrecompra
+# VELAS          - patron de velas (engulfing alcista / martillo) tras una
+#                  caida: pura accion del precio, sin indicadores derivados
+# SQUEEZE        - contraccion de Bandas de Bollinger a minimo de 100 dias
+#                  + ruptura por encima de la banda superior
+# VOLUMEN        - vela verde con volumen muy por encima del promedio (OBV simple)
+# PULLBACK_50    - retroceso a la SMA50 ascendente dentro de tendencia alcista
+# GAP            - gap alcista fuerte con cierre en la parte alta del rango
+#                  (continuacion probable al dia siguiente)
+# MERCADO_AMPLIO - igual que TECNICA pero solo si el SPY tambien esta alcista
+#                  (mide si el filtro de mercado amplio aporta algo)
+# SEMANAL_DIARIO - igual que TECNICA pero solo si la tendencia semanal
+#                  tambien es alcista (confirmacion multi-timeframe)
+# ROTACION       - solo opera el ticker con mejor momentum de 20 dias del
+#                  grupo (fuerza relativa), con tendencia alcista basica
+# SENTIMIENTO    - salto positivo de sentimiento de noticias vs su promedio
+#                  reciente, como señal propia (no solo como filtro)
 # Mismas reglas de riesgo para todas -> comparacion justa.
 # Estado en portfolio.json (se commitea al repo). Reporte a Telegram.
 # ============================================================
@@ -72,6 +86,41 @@ def senal_velas(u, ctx):
     # tras una caida (precio bajo su SMA20) -> senal de reversion real.
     return bool((ctx["bull_engulfing"] or ctx["martillo"]) and ctx["tras_caida"])
 
+def senal_squeeze(u, ctx):
+    # Bandas de Bollinger contraidas a su minimo reciente + ruptura al alza
+    return bool(ctx["bb_squeeze"] and u["Close"] > u["BB_upper"])
+
+def senal_volumen(u, ctx):
+    # Vela verde con volumen muy por encima del promedio de 20 dias
+    return bool(u["vol_rel"] > 2 and u["Close"] > u["Open"])
+
+def senal_pullback50(u, ctx):
+    # Retroceso a una SMA50 ascendente, dentro de tendencia alcista intacta
+    return bool(ctx["sma50_ascendente"] and u["Close"] > u["SMA50"]
+                and u["Low"] <= u["SMA50"] * 1.015)
+
+def senal_gap(u, ctx):
+    # Gap alcista fuerte (>1.5%) que cierra en el tercio superior del rango
+    return bool(ctx["gap_fuerte"])
+
+def senal_mercado_amplio(u, ctx):
+    # Breakout tecnico (igual que TECNICA) pero solo si el SPY tambien
+    # esta en tendencia alcista -> mide si el filtro de mercado aporta algo
+    return bool(u["SMA20"] > u["SMA50"] and ctx["breakout"] and ctx["spy_alcista"])
+
+def senal_semanal_diario(u, ctx):
+    # Breakout diario confirmado por tendencia semanal (multi-timeframe)
+    return bool(ctx["breakout"] and ctx["tendencia_semanal"])
+
+def senal_rotacion(u, ctx):
+    # Solo opera si este ticker es el de mejor momentum del grupo hoy
+    return bool(ctx["es_lider"] and u["SMA20"] > u["SMA50"])
+
+def senal_sentimiento(u, ctx):
+    # Salto positivo de sentimiento de noticias vs su promedio reciente
+    salto = ctx["salto_sentimiento"]
+    return bool(salto is not None and salto > 0.15)
+
 ESTRATEGIAS = {
     "IA+SENT": {"senal": senal_ia, "salida": None},
     "TECNICA": {"senal": senal_tecnica, "salida": None},
@@ -80,6 +129,14 @@ ESTRATEGIAS = {
     "BREAKOUT_55": {"senal": senal_breakout_55, "salida": None},
     "RSI_RAPIDO": {"senal": senal_rsi_rapido, "salida": salida_rsi_rapido},
     "VELAS": {"senal": senal_velas, "salida": None},
+    "SQUEEZE": {"senal": senal_squeeze, "salida": None},
+    "VOLUMEN": {"senal": senal_volumen, "salida": None},
+    "PULLBACK_50": {"senal": senal_pullback50, "salida": None},
+    "GAP": {"senal": senal_gap, "salida": None},
+    "MERCADO_AMPLIO": {"senal": senal_mercado_amplio, "salida": None},
+    "SEMANAL_DIARIO": {"senal": senal_semanal_diario, "salida": None},
+    "ROTACION": {"senal": senal_rotacion, "salida": None},
+    "SENTIMIENTO": {"senal": senal_sentimiento, "salida": None},
 }
 
 # ============================================================
@@ -95,6 +152,7 @@ def portafolio_nuevo():
         "estrategias": {n: estrategia_vacia() for n in ESTRATEGIAS},
         "ultima_fecha": {},
         "bh_ref": {},
+        "sentimiento_hist": {},
         "inicio": None
     }
 
@@ -108,6 +166,7 @@ def cargar_portfolio():
             for n in ESTRATEGIAS:
                 if n not in data["estrategias"]:
                     data["estrategias"][n] = estrategia_vacia()
+            data.setdefault("sentimiento_hist", {})
             return data
     print("Formato anterior detectado: se reinicia el experimento.")
     return portafolio_nuevo()
@@ -115,6 +174,20 @@ def cargar_portfolio():
 def guardar_portfolio(port):
     with open(PORTFOLIO_FILE, "w") as f:
         json.dump(port, f, indent=2)
+
+def actualizar_historial_sentimiento(port, ticker, valor):
+    # Guarda un historial rodante de sentimiento por ticker y devuelve el
+    # salto de HOY vs el promedio de las ultimas 5 lecturas previas
+    # (None hasta tener suficiente historial acumulado).
+    hist = port["sentimiento_hist"].setdefault(ticker, [])
+    salto = None
+    if valor is not None and len(hist) >= 5:
+        promedio_previo = sum(hist[-5:]) / len(hist[-5:])
+        salto = valor - promedio_previo
+    if valor is not None:
+        hist.append(valor)
+        port["sentimiento_hist"][ticker] = hist[-20:]
+    return salto
 
 # ============================================================
 # MECANICA DE TRADING (identica para todas las estrategias)
@@ -186,7 +259,30 @@ def gestionar_estrategia(nombre, est, p, ticker, barra, ctx, eventos):
             p["pendientes"].append(ticker)
             eventos.append(f"📌 [{nombre}] {ticker}: señal, entra mañana")
 
-def procesar_ticker(ticker, port, eventos):
+def calcular_momentum(tickers, eventos):
+    # Pre-pasada ligera (solo precios de cierre) para rankear el momentum
+    # de 20 dias de cada ticker y encontrar el lider del dia (ROTACION).
+    momentum = {}
+    for t in tickers:
+        try:
+            df = obtener_datos(t)
+            if len(df) >= 21:
+                momentum[t] = float(df["Close"].iloc[-1] / df["Close"].iloc[-21] - 1)
+        except Exception as e:
+            eventos.append(f"⚠ Momentum {t}: {e}")
+    return momentum
+
+def calcular_spy_alcista(eventos):
+    try:
+        spy = obtener_datos("SPY")
+        if len(spy) >= 60:
+            sma50 = spy["Close"].rolling(50).mean()
+            return bool(spy["Close"].iloc[-1] > sma50.iloc[-1])
+    except Exception as e:
+        eventos.append(f"⚠ SPY: {e}")
+    return False
+
+def procesar_ticker(ticker, port, eventos, contexto_global):
     df = obtener_datos(ticker)
     if len(df) < 120:
         return None
@@ -219,6 +315,26 @@ def procesar_ticker(ticker, port, eventos):
         martillo = False
     tras_caida = bool(u["Close"] < u["SMA20"])
 
+    # Squeeze de Bollinger: ancho de banda actual vs minimo de 100 dias
+    ancho = (df["BB_upper"] - df["BB_lower"]) / df["BB_mid"]
+    ancho_min = float(ancho.rolling(100, min_periods=20).min().iloc[-1])
+    ancho_hoy = float(ancho.iloc[-1])
+    bb_squeeze = bool(ancho_hoy <= ancho_min * 1.1)
+
+    # Pullback a SMA50 ascendente
+    sma50_ascendente = bool(u["SMA50"] > prev["SMA50"])
+
+    # Gap alcista fuerte con cierre fuerte
+    gap_pct = float((u["Open"] - prev["Close"]) / prev["Close"]) if prev["Close"] > 0 else 0.0
+    fuerza_cierre = float((u["Close"] - u["Low"]) / rango_u) if rango_u > 0 else 0.0
+    gap_fuerte = bool(gap_pct > 0.015 and fuerza_cierre > 0.7 and u["Close"] > u["Open"])
+
+    # Tendencia semanal (resample de los mismos datos diarios, sin fetch extra)
+    semanal = df["Close"].resample("W").last()
+    tendencia_semanal = False
+    if len(semanal) >= 10:
+        tendencia_semanal = bool(semanal.iloc[-1] > semanal.rolling(10).mean().iloc[-1])
+
     ia_prob = None
     try:
         modelo, _, _ = entrenar_IA(df)
@@ -226,10 +342,16 @@ def procesar_ticker(ticker, port, eventos):
     except Exception as e:
         eventos.append(f"⚠ IA {ticker}: {e}")
     sentimiento = analizar_sentimiento(ticker)
+    salto_sentimiento = actualizar_historial_sentimiento(port, ticker, sentimiento)
 
     ctx = {"breakout": breakout, "breakout_55": breakout_55,
            "hist_rising": hist_rising, "bull_engulfing": bull_engulfing,
            "martillo": martillo, "tras_caida": tras_caida,
+           "bb_squeeze": bb_squeeze, "sma50_ascendente": sma50_ascendente,
+           "gap_fuerte": gap_fuerte, "tendencia_semanal": tendencia_semanal,
+           "spy_alcista": contexto_global["spy_alcista"],
+           "es_lider": ticker == contexto_global["lider"],
+           "salto_sentimiento": salto_sentimiento,
            "ia_prob": ia_prob, "sentimiento": sentimiento}
     barra = {"ohlc": (float(u["Open"]), float(u["High"]),
                        float(u["Low"]), close_p),
@@ -249,9 +371,14 @@ if __name__ == "__main__":
     eventos = []
     cierres = {}
 
+    momentum = calcular_momentum(TICKERS, eventos)
+    lider = max(momentum, key=momentum.get) if momentum else None
+    spy_alcista = calcular_spy_alcista(eventos)
+    contexto_global = {"spy_alcista": spy_alcista, "lider": lider}
+
     for t in TICKERS:
         try:
-            c = procesar_ticker(t, port, eventos)
+            c = procesar_ticker(t, port, eventos, contexto_global)
             if c is not None:
                 cierres[t] = c
         except Exception as e:
@@ -279,6 +406,7 @@ if __name__ == "__main__":
     medallas = ["🥇", "🥈", "🥉"]
     lineas = [f"🧪 <b>PAPER TRADING</b> ({hoy})",
               f"Competencia de estrategias — ${CAPITAL_INICIAL} c/u",
+              f"Lider de momentum: {lider or 'N/D'} | SPY alcista: {'sí' if spy_alcista else 'no'}",
               ""]
     for i, (nombre, eq, ret, npos, ntr) in enumerate(filas):
         m = medallas[i] if i < len(medallas) else "•"
