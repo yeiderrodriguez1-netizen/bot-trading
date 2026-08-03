@@ -1,6 +1,6 @@
 # ============================================================
 # PAPER TRADING MULTI-ESTRATEGIA
-# 6 estrategias compiten en paralelo con $200 ficticios cada una:
+# 7 estrategias compiten en paralelo con $200 ficticios cada una:
 # IA+SENT       - breakout + IA + filtro de sentimiento (la original)
 # TECNICA       - breakout puro (20d), sin IA (¿la IA aporta algo?)
 # REVERSION     - comprar caidas (RSI bajo) dentro de tendencia alcista
@@ -10,6 +10,8 @@
 #                 selectiva y de mas largo plazo que TECNICA
 # RSI_RAPIDO    - rebote contrario con RSI(7): compra sobreventa extrema
 #                 sin filtro de tendencia, sale en sobrecompra
+# VELAS         - patron de velas (engulfing alcista / martillo) tras una
+#                 caida: pura accion del precio, sin indicadores derivados
 # Mismas reglas de riesgo para todas -> comparacion justa.
 # Estado en portfolio.json (se commitea al repo). Reporte a Telegram.
 # ============================================================
@@ -65,6 +67,11 @@ def senal_rsi_rapido(u, ctx):
 def salida_rsi_rapido(prev):
     return bool(prev["RSI7"] > 70)
 
+def senal_velas(u, ctx):
+    # Patron de velas puro: engulfing alcista o martillo, solo si aparece
+    # tras una caida (precio bajo su SMA20) -> senal de reversion real.
+    return bool((ctx["bull_engulfing"] or ctx["martillo"]) and ctx["tras_caida"])
+
 ESTRATEGIAS = {
     "IA+SENT": {"senal": senal_ia, "salida": None},
     "TECNICA": {"senal": senal_tecnica, "salida": None},
@@ -72,6 +79,7 @@ ESTRATEGIAS = {
     "REVERSION_BB": {"senal": senal_reversion_bb, "salida": salida_reversion_bb},
     "BREAKOUT_55": {"senal": senal_breakout_55, "salida": None},
     "RSI_RAPIDO": {"senal": senal_rsi_rapido, "salida": salida_rsi_rapido},
+    "VELAS": {"senal": senal_velas, "salida": None},
 }
 
 # ============================================================
@@ -196,6 +204,21 @@ def procesar_ticker(ticker, port, eventos):
     breakout = close_p > float(df["High"].rolling(20).max().shift(1).iloc[-1])
     breakout_55 = close_p > float(df["High"].rolling(55).max().shift(1).iloc[-1])
     hist_rising = bool(u["MACD_hist"] > prev["MACD_hist"])
+
+    # Patrones de velas (pura accion del precio, sobre la vela actual/anterior)
+    bull_engulfing = bool(prev["Close"] < prev["Open"] and u["Close"] > u["Open"]
+                           and u["Open"] <= prev["Close"] and u["Close"] >= prev["Open"])
+    rango_u = float(u["High"] - u["Low"])
+    if rango_u > 0:
+        cuerpo_u = abs(float(u["Close"] - u["Open"]))
+        mecha_inf = float(min(u["Open"], u["Close"]) - u["Low"])
+        mecha_sup = float(u["High"] - max(u["Open"], u["Close"]))
+        martillo = bool(mecha_inf >= 2 * cuerpo_u and mecha_sup <= 0.25 * rango_u
+                         and cuerpo_u <= 0.4 * rango_u)
+    else:
+        martillo = False
+    tras_caida = bool(u["Close"] < u["SMA20"])
+
     ia_prob = None
     try:
         modelo, _, _ = entrenar_IA(df)
@@ -205,8 +228,9 @@ def procesar_ticker(ticker, port, eventos):
     sentimiento = analizar_sentimiento(ticker)
 
     ctx = {"breakout": breakout, "breakout_55": breakout_55,
-           "hist_rising": hist_rising, "ia_prob": ia_prob,
-           "sentimiento": sentimiento}
+           "hist_rising": hist_rising, "bull_engulfing": bull_engulfing,
+           "martillo": martillo, "tras_caida": tras_caida,
+           "ia_prob": ia_prob, "sentimiento": sentimiento}
     barra = {"ohlc": (float(u["Open"]), float(u["High"]),
                        float(u["Low"]), close_p),
              "fecha": fecha, "atr": float(u["ATR"]),
