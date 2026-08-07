@@ -2,8 +2,16 @@
   "version": 1,
   "estrategias": {
     "EMA_RAPIDA": {
-      "capital": 200,
-      "posiciones": {},
+      "capital": -0.1998678244222276,
+      "posiciones": {
+        "MSFT": {
+          "unidades": 0.398771,
+          "entry": 501.54,
+          "stop": 499.24,
+          "tp": 505.38,
+          "hora": "2026-08-07 15:28"
+        }
+      },
       "historial": []
     },
     "RSI_SCALP": {
