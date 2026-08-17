@@ -48,16 +48,8 @@
       ]
     },
     "RSI_SCALP": {
-      "capital": -0.19311671901380123,
-      "posiciones": {
-        "MSFT": {
-          "unidades": 0.398402,
-          "entry": 485.33,
-          "stop": 482.92,
-          "tp": 489.34,
-          "hora": "2026-08-17 11:57"
-        }
-      },
+      "capital": 191.9146788783731,
+      "posiciones": {},
       "historial": [
         {
           "ticker": "BTC-USD",
@@ -122,6 +114,14 @@
           "pnl": -0.67,
           "motivo": "STOP",
           "hora": "2026-08-17 05:55"
+        },
+        {
+          "ticker": "MSFT",
+          "entrada": 485.33,
+          "salida": 482.68,
+          "pnl": -1.25,
+          "motivo": "STOP",
+          "hora": "2026-08-17 12:52"
         }
       ]
     }
