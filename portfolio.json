@@ -4,13 +4,17 @@
     "IA+SENT": {
       "capital": 200,
       "posiciones": {},
-      "pendientes": [],
+      "pendientes": [
+        "BTC-USD"
+      ],
       "historial": []
     },
     "TECNICA": {
       "capital": 191.15026109013843,
       "posiciones": {},
-      "pendientes": [],
+      "pendientes": [
+        "BTC-USD"
+      ],
       "historial": [
         {
           "ticker": "AAPL",
@@ -47,7 +51,9 @@
     "BREAKOUT_55": {
       "capital": 200.04287448004004,
       "posiciones": {},
-      "pendientes": [],
+      "pendientes": [
+        "BTC-USD"
+      ],
       "historial": [
         {
           "ticker": "MSFT",
@@ -72,7 +78,7 @@
         "AAPL": {
           "unidades": 0.210346,
           "entry": 314.5,
-          "stop": 299.89,
+          "stop": 305.35,
           "tp": 352.53,
           "fecha": "2026-08-06"
         }
@@ -89,29 +95,36 @@
     "VOLUMEN": {
       "capital": 200,
       "posiciones": {},
-      "pendientes": [],
+      "pendientes": [
+        "BTC-USD"
+      ],
       "historial": []
     },
     "PULLBACK_50": {
-      "capital": 71.2444145167861,
+      "capital": 138.96745818883954,
       "posiciones": {
         "AAPL": {
           "unidades": 0.210346,
           "entry": 314.5,
-          "stop": 299.89,
+          "stop": 305.35,
           "tp": 352.53,
           "fecha": "2026-08-06"
-        },
-        "BTC-USD": {
-          "unidades": 0.000977,
-          "entry": 63944.46,
-          "stop": 62721.03,
-          "tp": 69421.44,
-          "fecha": "2026-08-11"
         }
       },
-      "pendientes": [],
-      "historial": []
+      "pendientes": [
+        "BTC-USD"
+      ],
+      "historial": [
+        {
+          "ticker": "BTC-USD",
+          "entrada": 63944.46,
+          "salida": 69386.73,
+          "pnl": 5.25,
+          "motivo": "TAKE PROFIT",
+          "fecha_in": "2026-08-11",
+          "fecha_out": "2026-08-19"
+        }
+      ]
     },
     "GAP": {
       "capital": 200.04287448004004,
@@ -132,7 +145,9 @@
     "MERCADO_AMPLIO": {
       "capital": 200.04287448004004,
       "posiciones": {},
-      "pendientes": [],
+      "pendientes": [
+        "BTC-USD"
+      ],
       "historial": [
         {
           "ticker": "MSFT",
@@ -148,7 +163,9 @@
     "SEMANAL_DIARIO": {
       "capital": 200.04287448004004,
       "posiciones": {},
-      "pendientes": [],
+      "pendientes": [
+        "BTC-USD"
+      ],
       "historial": [
         {
           "ticker": "MSFT",
@@ -167,7 +184,7 @@
         "MSFT": {
           "unidades": 0.142579,
           "entry": 481.78,
-          "stop": 453.72,
+          "stop": 464.41,
           "tp": 537.9,
           "fecha": "2026-08-18"
         }
@@ -188,15 +205,17 @@
     "SENTIMIENTO": {
       "capital": 200,
       "posiciones": {},
-      "pendientes": [],
+      "pendientes": [
+        "MSFT"
+      ],
       "historial": []
     }
   },
   "ultima_fecha": {
-    "AAPL": "2026-08-18",
-    "MSFT": "2026-08-18",
-    "TSLA": "2026-08-18",
-    "BTC-USD": "2026-08-18"
+    "AAPL": "2026-08-19",
+    "MSFT": "2026-08-19",
+    "TSLA": "2026-08-19",
+    "BTC-USD": "2026-08-19"
   },
   "bh_ref": {
     "AAPL": 321.6600036621094,
@@ -218,7 +237,8 @@
       0.10796999999999998,
       0.09257,
       0.13264,
-      0.09094
+      0.09094,
+      0.14161
     ],
     "MSFT": [
       0.11915999999999997,
@@ -232,7 +252,8 @@
       0.044469999999999996,
       -0.008429999999999998,
       0.1511,
-      -0.1355
+      -0.1355,
+      0.21006999999999998
     ],
     "TSLA": [
       -0.21163999999999997,
@@ -246,7 +267,8 @@
       -0.05138,
       0.004239999999999999,
       0.1582,
-      -0.01712999999999999
+      -0.01712999999999999,
+      -0.006809999999999994
     ],
     "BTC-USD": [
       0.19383,
@@ -262,7 +284,8 @@
       0.01633,
       -0.15662000000000004,
       0.024630000000000003,
-      0.12742
+      0.12742,
+      0.11309
     ]
   }
 }
