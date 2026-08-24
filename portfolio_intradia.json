@@ -2,16 +2,8 @@
   "version": 1,
   "estrategias": {
     "EMA_RAPIDA": {
-      "capital": -0.19918081777123575,
-      "posiciones": {
-        "AAPL": {
-          "unidades": 0.637459,
-          "entry": 312.26,
-          "stop": 310.67,
-          "tp": 314.92,
-          "hora": "2026-08-24 10:10"
-        }
-      },
+      "capital": 197.81694688153303,
+      "posiciones": {},
       "historial": [
         {
           "ticker": "MSFT",
@@ -92,6 +84,14 @@
           "pnl": 1.04,
           "motivo": "TAKE PROFIT",
           "hora": "2026-08-23 07:34"
+        },
+        {
+          "ticker": "AAPL",
+          "entrada": 312.26,
+          "salida": 310.94,
+          "pnl": -1.04,
+          "motivo": "SALIDA",
+          "hora": "2026-08-24 15:40"
         }
       ]
     },
