@@ -2,8 +2,16 @@
   "version": 1,
   "estrategias": {
     "EMA_RAPIDA": {
-      "capital": 199.0534980799341,
-      "posiciones": {},
+      "capital": -0.19918081777123575,
+      "posiciones": {
+        "AAPL": {
+          "unidades": 0.637459,
+          "entry": 312.26,
+          "stop": 310.67,
+          "tp": 314.92,
+          "hora": "2026-08-24 10:10"
+        }
+      },
       "historial": [
         {
           "ticker": "MSFT",
@@ -88,16 +96,8 @@
       ]
     },
     "RSI_SCALP": {
-      "capital": -0.18939272965667442,
-      "posiciones": {
-        "MSFT": {
-          "unidades": 0.393584,
-          "entry": 481.79,
-          "stop": 479.58,
-          "tp": 485.48,
-          "hora": "2026-08-21 14:20"
-        }
-      },
+      "capital": 190.60124738844348,
+      "posiciones": {},
       "historial": [
         {
           "ticker": "BTC-USD",
@@ -186,6 +186,14 @@
           "pnl": -1.29,
           "motivo": "STOP",
           "hora": "2026-08-20 11:23"
+        },
+        {
+          "ticker": "MSFT",
+          "entrada": 481.79,
+          "salida": 485.24,
+          "pnl": 1.17,
+          "motivo": "TAKE PROFIT",
+          "hora": "2026-08-24 10:10"
         }
       ]
     }
