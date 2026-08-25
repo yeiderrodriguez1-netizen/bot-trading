@@ -112,8 +112,16 @@
       ]
     },
     "RSI_SCALP": {
-      "capital": 188.9867799340005,
-      "posiciones": {},
+      "capital": -0.18899686154000506,
+      "posiciones": {
+        "AAPL": {
+          "unidades": 0.611045,
+          "entry": 309.28,
+          "stop": 308.19,
+          "tp": 311.11,
+          "hora": "2026-08-25 15:22"
+        }
+      },
       "historial": [
         {
           "ticker": "BTC-USD",
