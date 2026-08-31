@@ -2,16 +2,8 @@
   "version": 1,
   "estrategias": {
     "EMA_RAPIDA": {
-      "capital": -0.1624367426806259,
-      "posiciones": {
-        "BTC-USD": {
-          "unidades": 0.002522,
-          "entry": 77949.46,
-          "stop": 77607.85,
-          "tp": 78518.8,
-          "hora": "2026-08-31 02:07"
-        }
-      },
+      "capital": 196.55373066494062,
+      "posiciones": {},
       "historial": [
         {
           "ticker": "MSFT",
@@ -124,6 +116,14 @@
           "pnl": -1.25,
           "motivo": "STOP",
           "hora": "2026-08-26 04:59"
+        },
+        {
+          "ticker": "BTC-USD",
+          "entrada": 77949.46,
+          "salida": 78078.14,
+          "pnl": 0.13,
+          "motivo": "SALIDA",
+          "hora": "2026-08-31 09:40"
         }
       ]
     },
