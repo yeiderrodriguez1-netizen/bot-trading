@@ -2,16 +2,8 @@
   "version": 2,
   "estrategias": {
     "IA+SENT": {
-      "capital": 130.26486435684404,
-      "posiciones": {
-        "BTC-USD": {
-          "unidades": 0.000988,
-          "entry": 78366.13,
-          "stop": 76500.16,
-          "tp": 86778.06,
-          "fecha": "2026-08-22"
-        }
-      },
+      "capital": 205.73368699080308,
+      "posiciones": {},
       "pendientes": [],
       "historial": [
         {
@@ -22,27 +14,21 @@
           "motivo": "TAKE PROFIT",
           "fecha_in": "2026-08-20",
           "fecha_out": "2026-08-21"
+        },
+        {
+          "ticker": "BTC-USD",
+          "entrada": 78366.13,
+          "salida": 76461.91,
+          "pnl": -1.96,
+          "motivo": "STOP",
+          "fecha_in": "2026-08-22",
+          "fecha_out": "2026-09-02"
         }
       ]
     },
     "TECNICA": {
-      "capital": 71.52640618609645,
-      "posiciones": {
-        "BTC-USD": {
-          "unidades": 0.000944,
-          "entry": 78366.13,
-          "stop": 76500.16,
-          "tp": 86778.06,
-          "fecha": "2026-08-22"
-        },
-        "MSFT": {
-          "unidades": 0.106927,
-          "entry": 495.13,
-          "stop": 495.45,
-          "tp": 541.71,
-          "fecha": "2026-08-27"
-        }
-      },
+      "capital": 196.53181227287803,
+      "posiciones": {},
       "pendientes": [],
       "historial": [
         {
@@ -71,6 +57,24 @@
           "motivo": "TAKE PROFIT",
           "fecha_in": "2026-08-20",
           "fecha_out": "2026-08-21"
+        },
+        {
+          "ticker": "MSFT",
+          "entrada": 495.13,
+          "salida": 495.2,
+          "pnl": -0.05,
+          "motivo": "STOP",
+          "fecha_in": "2026-08-27",
+          "fecha_out": "2026-09-02"
+        },
+        {
+          "ticker": "BTC-USD",
+          "entrada": 78366.13,
+          "salida": 76461.91,
+          "pnl": -1.87,
+          "motivo": "STOP",
+          "fecha_in": "2026-08-22",
+          "fecha_out": "2026-09-02"
         }
       ]
     },
@@ -87,23 +91,8 @@
       "historial": []
     },
     "BREAKOUT_55": {
-      "capital": 74.84955548343083,
-      "posiciones": {
-        "BTC-USD": {
-          "unidades": 0.000988,
-          "entry": 78366.13,
-          "stop": 76500.16,
-          "tp": 86778.06,
-          "fecha": "2026-08-22"
-        },
-        "MSFT": {
-          "unidades": 0.111896,
-          "entry": 495.13,
-          "stop": 495.45,
-          "tp": 541.71,
-          "fecha": "2026-08-27"
-        }
-      },
+      "capital": 205.67412072702646,
+      "posiciones": {},
       "pendientes": [],
       "historial": [
         {
@@ -123,6 +112,24 @@
           "motivo": "TAKE PROFIT",
           "fecha_in": "2026-08-20",
           "fecha_out": "2026-08-21"
+        },
+        {
+          "ticker": "MSFT",
+          "entrada": 495.13,
+          "salida": 495.2,
+          "pnl": -0.05,
+          "motivo": "STOP",
+          "fecha_in": "2026-08-27",
+          "fecha_out": "2026-09-02"
+        },
+        {
+          "ticker": "BTC-USD",
+          "entrada": 78366.13,
+          "salida": 76461.91,
+          "pnl": -1.96,
+          "motivo": "STOP",
+          "fecha_in": "2026-08-22",
+          "fecha_out": "2026-09-02"
         }
       ]
     },
@@ -138,7 +145,7 @@
         "AAPL": {
           "unidades": 0.210346,
           "entry": 314.5,
-          "stop": 313.7,
+          "stop": 313.83,
           "tp": 352.53,
           "fecha": "2026-08-06"
         }
@@ -153,16 +160,8 @@
       "historial": []
     },
     "VOLUMEN": {
-      "capital": 130.26486435684404,
-      "posiciones": {
-        "BTC-USD": {
-          "unidades": 0.000988,
-          "entry": 78366.13,
-          "stop": 76500.16,
-          "tp": 86778.06,
-          "fecha": "2026-08-22"
-        }
-      },
+      "capital": 205.73368699080308,
+      "posiciones": {},
       "pendientes": [],
       "historial": [
         {
@@ -173,6 +172,15 @@
           "motivo": "TAKE PROFIT",
           "fecha_in": "2026-08-20",
           "fecha_out": "2026-08-21"
+        },
+        {
+          "ticker": "BTC-USD",
+          "entrada": 78366.13,
+          "salida": 76461.91,
+          "pnl": -1.96,
+          "motivo": "STOP",
+          "fecha_in": "2026-08-22",
+          "fecha_out": "2026-09-02"
         }
       ]
     },
@@ -182,7 +190,7 @@
         "AAPL": {
           "unidades": 0.210346,
           "entry": 314.5,
-          "stop": 313.7,
+          "stop": 313.83,
           "tp": 352.53,
           "fecha": "2026-08-06"
         }
@@ -226,21 +234,64 @@
       ]
     },
     "MERCADO_AMPLIO": {
-      "capital": 74.84955548343083,
-      "posiciones": {
-        "BTC-USD": {
-          "unidades": 0.000988,
-          "entry": 78366.13,
-          "stop": 76500.16,
-          "tp": 86778.06,
-          "fecha": "2026-08-22"
+      "capital": 205.67412072702646,
+      "posiciones": {},
+      "pendientes": [],
+      "historial": [
+        {
+          "ticker": "MSFT",
+          "entrada": 481.0,
+          "salida": 482.32,
+          "pnl": 0.1,
+          "motivo": "STOP",
+          "fecha_in": "2026-08-04",
+          "fecha_out": "2026-08-17"
         },
-        "MSFT": {
-          "unidades": 0.111896,
-          "entry": 495.13,
-          "stop": 495.45,
-          "tp": 541.71,
-          "fecha": "2026-08-27"
+        {
+          "ticker": "BTC-USD",
+          "entrada": 69324.08,
+          "salida": 75518.79,
+          "pnl": 7.86,
+          "motivo": "TAKE PROFIT",
+          "fecha_in": "2026-08-20",
+          "fecha_out": "2026-08-21"
+        },
+        {
+          "ticker": "MSFT",
+          "entrada": 495.13,
+          "salida": 495.2,
+          "pnl": -0.05,
+          "motivo": "STOP",
+          "fecha_in": "2026-08-27",
+          "fecha_out": "2026-09-02"
+        },
+        {
+          "ticker": "BTC-USD",
+          "entrada": 78366.13,
+          "salida": 76461.91,
+          "pnl": -1.96,
+          "motivo": "STOP",
+          "fecha_in": "2026-08-22",
+          "fecha_out": "2026-09-02"
+        }
+      ]
+    },
+    "SEMANAL_DIARIO": {
+      "capital": 147.87126158329724,
+      "posiciones": {
+        "TSLA": {
+          "unidades": 0.094023,
+          "entry": 361.93,
+          "stop": 347.43,
+          "tp": 417.37,
+          "fecha": "2026-08-24"
+        },
+        "AAPL": {
+          "unidades": 0.072576,
+          "entry": 327.13,
+          "stop": 311.9,
+          "tp": 357.6,
+          "fecha": "2026-09-02"
         }
       },
       "pendientes": [],
@@ -262,55 +313,24 @@
           "motivo": "TAKE PROFIT",
           "fecha_in": "2026-08-20",
           "fecha_out": "2026-08-21"
-        }
-      ]
-    },
-    "SEMANAL_DIARIO": {
-      "capital": 55.28315485987463,
-      "posiciones": {
-        "BTC-USD": {
-          "unidades": 0.000988,
-          "entry": 78366.13,
-          "stop": 76500.16,
-          "tp": 86778.06,
-          "fecha": "2026-08-22"
         },
-        "TSLA": {
-          "unidades": 0.094023,
-          "entry": 361.93,
-          "stop": 347.43,
-          "tp": 417.37,
-          "fecha": "2026-08-24"
-        },
-        "MSFT": {
-          "unidades": 0.082645,
-          "entry": 495.13,
-          "stop": 495.45,
-          "tp": 541.71,
-          "fecha": "2026-08-27"
-        }
-      },
-      "pendientes": [
-        "AAPL"
-      ],
-      "historial": [
         {
           "ticker": "MSFT",
-          "entrada": 481.0,
-          "salida": 482.32,
-          "pnl": 0.1,
+          "entrada": 495.13,
+          "salida": 495.2,
+          "pnl": -0.03,
           "motivo": "STOP",
-          "fecha_in": "2026-08-04",
-          "fecha_out": "2026-08-17"
+          "fecha_in": "2026-08-27",
+          "fecha_out": "2026-09-02"
         },
         {
           "ticker": "BTC-USD",
-          "entrada": 69324.08,
-          "salida": 75518.79,
-          "pnl": 7.86,
-          "motivo": "TAKE PROFIT",
-          "fecha_in": "2026-08-20",
-          "fecha_out": "2026-08-21"
+          "entrada": 78366.13,
+          "salida": 76461.91,
+          "pnl": -1.96,
+          "motivo": "STOP",
+          "fecha_in": "2026-08-22",
+          "fecha_out": "2026-09-02"
         }
       ]
     },
@@ -373,10 +393,10 @@
     }
   },
   "ultima_fecha": {
-    "AAPL": "2026-09-01",
-    "MSFT": "2026-09-01",
-    "TSLA": "2026-09-01",
-    "BTC-USD": "2026-09-01"
+    "AAPL": "2026-09-02",
+    "MSFT": "2026-09-02",
+    "TSLA": "2026-09-02",
+    "BTC-USD": "2026-09-02"
   },
   "bh_ref": {
     "AAPL": 321.6600036621094,
@@ -387,7 +407,6 @@
   "inicio": "2026-07-24",
   "sentimiento_hist": {
     "AAPL": [
-      -3.999999999999559e-05,
       -0.020819999999999995,
       -0.02896999999999999,
       0.17103,
@@ -406,10 +425,10 @@
       0.05195000000000001,
       0.14877,
       0.14018000000000003,
-      0.11347
+      0.11347,
+      -0.06429
     ],
     "MSFT": [
-      0.14192,
       0.05674000000000001,
       0.06592,
       -0.03567000000000001,
@@ -428,10 +447,10 @@
       0.08512,
       0.3402900000000001,
       0.04691000000000001,
-      0.13865
+      0.13865,
+      0.14286
     ],
     "TSLA": [
-      0.32703,
       -0.0633,
       0.07896,
       0.12581000000000003,
@@ -450,10 +469,10 @@
       0.03924999999999999,
       0.07250999999999999,
       -0.11706000000000001,
-      -0.02195999999999999
+      -0.02195999999999999,
+      -0.16074000000000002
     ],
     "BTC-USD": [
-      0.04260000000000001,
       0.08986000000000001,
       0.05398000000000001,
       0.01033,
@@ -472,7 +491,8 @@
       0.23202000000000003,
       0.15662,
       0.12317,
-      0.07587000000000002
+      0.07587000000000002,
+      0.02147000000000001
     ]
   }
 }
