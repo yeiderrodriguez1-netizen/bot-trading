@@ -144,16 +144,8 @@
       ]
     },
     "RSI_SCALP": {
-      "capital": -0.19118128693585845,
-      "posiciones": {
-        "AAPL": {
-          "unidades": 0.584272,
-          "entry": 327.45,
-          "stop": 325.74,
-          "tp": 330.31,
-          "hora": "2026-09-03 14:04"
-        }
-      },
+      "capital": 189.8441940115248,
+      "posiciones": {},
       "historial": [
         {
           "ticker": "BTC-USD",
@@ -298,6 +290,14 @@
           "pnl": 1.14,
           "motivo": "TAKE PROFIT",
           "hora": "2026-09-02 14:50"
+        },
+        {
+          "ticker": "AAPL",
+          "entrada": 327.45,
+          "salida": 325.58,
+          "pnl": -1.28,
+          "motivo": "STOP",
+          "hora": "2026-09-04 09:46"
         }
       ]
     }
