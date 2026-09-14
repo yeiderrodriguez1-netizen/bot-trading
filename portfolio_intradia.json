@@ -2,16 +2,8 @@
   "version": 1,
   "estrategias": {
     "EMA_RAPIDA": {
-      "capital": -0.19371499007874604,
-      "posiciones": {
-        "MSFT": {
-          "unidades": 0.391278,
-          "entry": 494.51,
-          "stop": 492.27,
-          "tp": 498.23,
-          "hora": "2026-09-11 09:31"
-        }
-      },
+      "capital": 194.46040076623024,
+      "posiciones": {},
       "historial": [
         {
           "ticker": "MSFT",
@@ -164,6 +156,14 @@
           "pnl": -0.73,
           "motivo": "STOP",
           "hora": "2026-09-07 18:11"
+        },
+        {
+          "ticker": "MSFT",
+          "entrada": 494.51,
+          "salida": 497.98,
+          "pnl": 1.16,
+          "motivo": "TAKE PROFIT",
+          "hora": "2026-09-14 12:33"
         }
       ]
     },
