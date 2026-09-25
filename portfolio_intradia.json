@@ -2,16 +2,8 @@
   "version": 1,
   "estrategias": {
     "EMA_RAPIDA": {
-      "capital": -0.1931427351823629,
-      "posiciones": {
-        "TSLA": {
-          "unidades": 0.508042,
-          "entry": 380.06,
-          "stop": 377.75,
-          "tp": 383.92,
-          "hora": "2026-09-23 14:28"
-        }
-      },
+      "capital": 191.4319494230004,
+      "posiciones": {},
       "historial": [
         {
           "ticker": "MSFT",
@@ -188,6 +180,14 @@
           "pnl": 0.88,
           "motivo": "TAKE PROFIT",
           "hora": "2026-09-23 00:57"
+        },
+        {
+          "ticker": "TSLA",
+          "entrada": 380.06,
+          "salida": 377.56,
+          "pnl": -1.46,
+          "motivo": "STOP",
+          "hora": "2026-09-25 13:22"
         }
       ]
     },
