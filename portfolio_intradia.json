@@ -200,14 +200,14 @@
       ]
     },
     "RSI_SCALP": {
-      "capital": -0.18693548151898653,
+      "capital": -0.18578083826088232,
       "posiciones": {
-        "MSFT": {
-          "unidades": 0.354075,
-          "entry": 528.16,
-          "stop": 525.73,
-          "tp": 532.22,
-          "hora": "2026-10-07 09:54"
+        "TSLA": {
+          "unidades": 0.501233,
+          "entry": 370.45,
+          "stop": 368.19,
+          "tp": 374.22,
+          "hora": "2026-10-08 13:38"
         }
       },
       "historial": [
@@ -410,6 +410,14 @@
           "pnl": 1.21,
           "motivo": "TAKE PROFIT",
           "hora": "2026-09-30 06:40"
+        },
+        {
+          "ticker": "MSFT",
+          "entrada": 528.16,
+          "salida": 525.47,
+          "pnl": -1.14,
+          "motivo": "STOP",
+          "hora": "2026-10-08 13:38"
         }
       ]
     }
