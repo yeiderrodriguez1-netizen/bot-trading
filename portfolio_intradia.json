@@ -216,16 +216,8 @@
       ]
     },
     "RSI_SCALP": {
-      "capital": -0.1871784052781038,
-      "posiciones": {
-        "TSLA": {
-          "unidades": 0.522647,
-          "entry": 357.99,
-          "stop": 354.73,
-          "tp": 363.43,
-          "hora": "2026-10-15 10:31"
-        }
-      },
+      "capital": 184.93338674854203,
+      "posiciones": {},
       "historial": [
         {
           "ticker": "BTC-USD",
@@ -442,6 +434,14 @@
           "pnl": 1.61,
           "motivo": "TAKE PROFIT",
           "hora": "2026-10-09 12:23"
+        },
+        {
+          "ticker": "TSLA",
+          "entrada": 357.99,
+          "salida": 354.55,
+          "pnl": -1.98,
+          "motivo": "STOP",
+          "hora": "2026-10-16 15:45"
         }
       ]
     }
