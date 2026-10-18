@@ -2,8 +2,16 @@
   "version": 1,
   "estrategias": {
     "EMA_RAPIDA": {
-      "capital": 188.11585960996916,
-      "posiciones": {},
+      "capital": -0.1708820095855117,
+      "posiciones": {
+        "BTC-USD": {
+          "unidades": 0.002297,
+          "entry": 81888.83,
+          "stop": 81729.6,
+          "tp": 82154.21,
+          "hora": "2026-10-18 05:12"
+        }
+      },
       "historial": [
         {
           "ticker": "MSFT",
