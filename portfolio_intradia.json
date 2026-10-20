@@ -224,8 +224,16 @@
       ]
     },
     "RSI_SCALP": {
-      "capital": 184.93338674854203,
-      "posiciones": {},
+      "capital": -0.21503697409531242,
+      "posiciones": {
+        "BTC-USD": {
+          "unidades": 0.002272,
+          "entry": 81409.97,
+          "stop": 81113.96,
+          "tp": 81903.34,
+          "hora": "2026-10-19 21:26"
+        }
+      },
       "historial": [
         {
           "ticker": "BTC-USD",
