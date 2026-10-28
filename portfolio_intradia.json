@@ -2,8 +2,16 @@
   "version": 1,
   "estrategias": {
     "EMA_RAPIDA": {
-      "capital": 188.13801848958425,
-      "posiciones": {},
+      "capital": -0.18797333925789417,
+      "posiciones": {
+        "MSFT": {
+          "unidades": 0.354947,
+          "entry": 530.04,
+          "stop": 527.96,
+          "tp": 533.52,
+          "hora": "2026-10-28 15:46"
+        }
+      },
       "historial": [
         {
           "ticker": "MSFT",
@@ -232,8 +240,16 @@
       ]
     },
     "RSI_SCALP": {
-      "capital": 184.49744651181004,
-      "posiciones": {},
+      "capital": -0.18446433846341392,
+      "posiciones": {
+        "AAPL": {
+          "unidades": 0.535649,
+          "entry": 344.44,
+          "stop": 343.42,
+          "tp": 346.14,
+          "hora": "2026-10-28 15:46"
+        }
+      },
       "historial": [
         {
           "ticker": "BTC-USD",
