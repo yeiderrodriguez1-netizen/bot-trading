@@ -36,11 +36,17 @@
       ]
     },
     "TECNICA": {
-      "capital": 188.56923883224624,
-      "posiciones": {},
-      "pendientes": [
-        "MSFT"
-      ],
+      "capital": 117.93831076169973,
+      "posiciones": {
+        "MSFT": {
+          "unidades": 0.127086,
+          "entry": 555.22,
+          "stop": 525.54,
+          "tp": 614.57,
+          "fecha": "2026-11-05"
+        }
+      },
+      "pendientes": [],
       "historial": [
         {
           "ticker": "AAPL",
@@ -138,11 +144,17 @@
       "historial": []
     },
     "BREAKOUT_55": {
-      "capital": 197.99531010184523,
-      "posiciones": {},
-      "pendientes": [
-        "MSFT"
-      ],
+      "capital": 123.83355813226828,
+      "posiciones": {
+        "MSFT": {
+          "unidades": 0.133439,
+          "entry": 555.22,
+          "stop": 525.54,
+          "tp": 614.57,
+          "fecha": "2026-11-05"
+        }
+      },
+      "pendientes": [],
       "historial": [
         {
           "ticker": "MSFT",
@@ -212,7 +224,9 @@
     "RSI_RAPIDO": {
       "capital": 198.62165449012204,
       "posiciones": {},
-      "pendientes": [],
+      "pendientes": [
+        "TSLA"
+      ],
       "historial": [
         {
           "ticker": "BTC-USD",
@@ -226,16 +240,8 @@
       ]
     },
     "VELAS": {
-      "capital": 112.20571929991644,
-      "posiciones": {
-        "MSFT": {
-          "unidades": 0.169238,
-          "entry": 524.28,
-          "stop": 533.54,
-          "tp": 571.79,
-          "fecha": "2026-11-02"
-        }
-      },
+      "capital": 202.36556410375772,
+      "posiciones": {},
       "pendientes": [],
       "historial": [
         {
@@ -300,6 +306,15 @@
           "motivo": "STOP (gap)",
           "fecha_in": "2026-10-27",
           "fecha_out": "2026-10-30"
+        },
+        {
+          "ticker": "MSFT",
+          "entrada": 524.28,
+          "salida": 533.27,
+          "pnl": 1.43,
+          "motivo": "STOP",
+          "fecha_in": "2026-11-02",
+          "fecha_out": "2026-11-05"
         }
       ]
     },
@@ -310,11 +325,17 @@
       "historial": []
     },
     "VOLUMEN": {
-      "capital": 205.73368699080308,
-      "posiciones": {},
-      "pendientes": [
-        "MSFT"
-      ],
+      "capital": 128.67358044331903,
+      "posiciones": {
+        "MSFT": {
+          "unidades": 0.138654,
+          "entry": 555.22,
+          "stop": 525.54,
+          "tp": 614.57,
+          "fecha": "2026-11-05"
+        }
+      },
+      "pendientes": [],
       "historial": [
         {
           "ticker": "BTC-USD",
@@ -337,19 +358,9 @@
       ]
     },
     "PULLBACK_50": {
-      "capital": 165.1537500771352,
-      "posiciones": {
-        "MSFT": {
-          "unidades": 0.08232,
-          "entry": 524.28,
-          "stop": 533.54,
-          "tp": 571.79,
-          "fecha": "2026-11-02"
-        }
-      },
-      "pendientes": [
-        "TSLA"
-      ],
+      "capital": 204.69622462533317,
+      "posiciones": {},
+      "pendientes": [],
       "historial": [
         {
           "ticker": "BTC-USD",
@@ -449,23 +460,46 @@
           "motivo": "STOP (gap)",
           "fecha_in": "2026-10-26",
           "fecha_out": "2026-11-04"
+        },
+        {
+          "ticker": "MSFT",
+          "entrada": 524.28,
+          "salida": 533.27,
+          "pnl": 0.7,
+          "motivo": "STOP",
+          "fecha_in": "2026-11-02",
+          "fecha_out": "2026-11-05"
+        },
+        {
+          "ticker": "TSLA",
+          "entrada": 374.31,
+          "salida": 345.96,
+          "pnl": -4.26,
+          "motivo": "STOP (mismo d\u00eda)",
+          "fecha_in": "2026-11-05",
+          "fecha_out": "2026-11-05"
         }
       ]
     },
     "GAP": {
-      "capital": 128.95528663259645,
+      "capital": 80.65308215207776,
       "posiciones": {
         "BTC-USD": {
           "unidades": 0.000903,
           "entry": 76020.8,
-          "stop": 71641.12,
+          "stop": 72414.24,
           "tp": 84780.18,
           "fecha": "2026-11-06"
+        },
+        "MSFT": {
+          "unidades": 0.08691,
+          "entry": 555.22,
+          "stop": 525.54,
+          "tp": 614.57,
+          "fecha": "2026-11-05"
         }
       },
-      "pendientes": [
-        "MSFT"
-      ],
+      "pendientes": [],
       "historial": [
         {
           "ticker": "MSFT",
@@ -506,11 +540,17 @@
       ]
     },
     "MERCADO_AMPLIO": {
-      "capital": 195.57976563175606,
-      "posiciones": {},
-      "pendientes": [
-        "MSFT"
-      ],
+      "capital": 122.32281160136083,
+      "posiciones": {
+        "MSFT": {
+          "unidades": 0.131811,
+          "entry": 555.22,
+          "stop": 525.54,
+          "tp": 614.57,
+          "fecha": "2026-11-05"
+        }
+      },
+      "pendientes": [],
       "historial": [
         {
           "ticker": "MSFT",
@@ -587,11 +627,17 @@
       ]
     },
     "SEMANAL_DIARIO": {
-      "capital": 196.69462679068778,
-      "posiciones": {},
-      "pendientes": [
-        "MSFT"
-      ],
+      "capital": 123.01973169747642,
+      "posiciones": {
+        "MSFT": {
+          "unidades": 0.132563,
+          "entry": 555.22,
+          "stop": 525.54,
+          "tp": 614.57,
+          "fecha": "2026-11-05"
+        }
+      },
+      "pendientes": [],
       "historial": [
         {
           "ticker": "MSFT",
@@ -686,11 +732,17 @@
       ]
     },
     "ROTACION": {
-      "capital": 191.14366462253759,
-      "posiciones": {},
-      "pendientes": [
-        "MSFT"
-      ],
+      "capital": 119.54847093498843,
+      "posiciones": {
+        "MSFT": {
+          "unidades": 0.128821,
+          "entry": 555.22,
+          "stop": 525.54,
+          "tp": 614.57,
+          "fecha": "2026-11-05"
+        }
+      },
+      "pendientes": [],
       "historial": [
         {
           "ticker": "MSFT",
@@ -883,10 +935,10 @@
     }
   },
   "ultima_fecha": {
-    "AAPL": "2026-11-04",
-    "MSFT": "2026-11-04",
-    "TSLA": "2026-11-04",
-    "BTC-USD": "2026-11-06"
+    "AAPL": "2026-11-05",
+    "MSFT": "2026-11-05",
+    "TSLA": "2026-11-05",
+    "BTC-USD": "2026-11-07"
   },
   "bh_ref": {
     "AAPL": 321.6600036621094,
@@ -897,7 +949,6 @@
   "inicio": "2026-07-24",
   "sentimiento_hist": {
     "AAPL": [
-      0.08234000000000001,
       0.21064,
       0.29669,
       0.08997,
@@ -916,10 +967,10 @@
       -0.02965000000000001,
       -0.03961999999999999,
       0.06361,
-      0.038660000000000014
+      0.038660000000000014,
+      -0.03335999999999999
     ],
     "MSFT": [
-      0.10197999999999999,
       0.22416000000000005,
       0.17048999999999997,
       0.16870999999999997,
@@ -938,10 +989,10 @@
       0.09403999999999998,
       0.05327,
       0.15506999999999999,
-      0.04749000000000002
+      0.04749000000000002,
+      -0.013909999999999995
     ],
     "TSLA": [
-      0.16358,
       0.13571999999999998,
       0.030209999999999997,
       0.06352,
@@ -960,10 +1011,10 @@
       -0.01814,
       0.08489999999999999,
       0.07699,
-      0.028809999999999995
+      0.028809999999999995,
+      0.09108
     ],
     "BTC-USD": [
-      -0.020539999999999996,
       -0.18823,
       0.03795,
       -0.1351,
@@ -982,7 +1033,8 @@
       0.11130999999999998,
       0.16825,
       -0.0004200000000000037,
-      -0.13
+      -0.13,
+      -0.06267
     ]
   }
 }
