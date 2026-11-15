@@ -256,16 +256,8 @@
       ]
     },
     "RSI_SCALP": {
-      "capital": -0.15313620828428043,
-      "posiciones": {
-        "BTC-USD": {
-          "unidades": 0.002823,
-          "entry": 64185.78,
-          "stop": 63433.73,
-          "tp": 65439.19,
-          "hora": "2026-11-14 18:54"
-        }
-      },
+      "capital": 184.30468727907743,
+      "posiciones": {},
       "historial": [
         {
           "ticker": "BTC-USD",
@@ -538,6 +530,14 @@
           "pnl": -1.23,
           "motivo": "STOP",
           "hora": "2026-11-13 03:16"
+        },
+        {
+          "ticker": "BTC-USD",
+          "entrada": 64185.78,
+          "salida": 65406.47,
+          "pnl": 3.26,
+          "motivo": "TAKE PROFIT",
+          "hora": "2026-11-15 06:29"
         }
       ]
     }
